@@ -27,5 +27,5 @@ openai:
     model: gpt-3.5-turbo
 
 telegram:
-  bot-token: 8499544048:AAG8rXA5BFkRFYpbSmcWXBhZvotANpsUNSI
-  chat-id: 1940472032
+  bot-token: ${TELEGRAM_BOT_TOKEN}
+  chat-id: ${TELEGRAM_CHAT_ID}
