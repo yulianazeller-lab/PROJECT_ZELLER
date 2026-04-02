@@ -1,0 +1,30 @@
+name: CI/CD
+on:
+  push:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - run: mvn test --no-transfer-progress
+        env:
+          DATABASE_URL: jdbc:postgresql://localhost:5432/test
+          DATABASE_USERNAME: test
+          DATABASE_PASSWORD: test
+          JWT_SECRET: test-secret-key-for-ci
+      - run: mvn package -DskipTests --no-transfer-progress
