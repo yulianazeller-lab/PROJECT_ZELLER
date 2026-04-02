@@ -9,7 +9,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: test
+          POSTGRES_DB: darinashop
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
         ports: ["5432:5432"]
@@ -24,9 +24,9 @@ jobs:
       - run: mvn test --no-transfer-progress
         working-directory: darinashop
         env:
-          DATABASE_URL: jdbc:postgresql://localhost:5432/test
+          DATABASE_URL: jdbc:postgresql://localhost:5432/darinashop
           DATABASE_USERNAME: test
           DATABASE_PASSWORD: test
-          JWT_SECRET: test-secret-key-for-ci
+          JWT_SECRET: darina-shop-super-secret-jwt-key-2024
       - run: mvn package -DskipTests --no-transfer-progress
         working-directory: darinashop
