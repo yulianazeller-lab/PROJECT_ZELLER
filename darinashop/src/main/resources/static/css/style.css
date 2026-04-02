@@ -147,3 +147,30 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 40%, transparent 100%);
     pointer-events: none;
 }
+.nav-contacts {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+.nav-contacts a {
+    color: white;
+    text-decoration: none;
+}
+.nav-contacts img {
+    width: 20px;
+    height: 20px;
+}.nav-contacts {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     font-size: 14px;
+ }
+.nav-contacts a {
+    color: white;
+    text-decoration: none;
+}
+.nav-contacts img {
+    width: 20px;
+    height: 20px;
+}
