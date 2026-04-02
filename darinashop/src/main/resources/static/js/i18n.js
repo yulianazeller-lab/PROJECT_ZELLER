@@ -49,7 +49,7 @@ const translationCache = { ua:{}, en:{}, ru:{}, de:{} };
 async function translateProducts(products) {
     if (currentLang==='ua') return products;
     const toTranslate = products.filter(p => !translationCache[currentLang][p.name]);
-    if (toTranslate.length > 0) {F
+    if (toTranslate.length > 0) {
         const chunks = [];
         for (let i=0; i<toTranslate.length; i+=8) chunks.push(toTranslate.slice(i,i+8));
         for (const chunk of chunks) {
