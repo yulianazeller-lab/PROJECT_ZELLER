@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darina Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-logo" onclick="showSection('hero')">Darina<span>Shop</span></div>
+    <div class="nav-links">
+        <a href="#" id="navCatalog" onclick="showSection('catalog')">Каталог</a>
+        <a href="#" id="navOrders" onclick="showSection('orders')" style="display:none">Мої замовлення</a>
+    </div>
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="ua" onclick="setLang('ua')">UA</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" data-lang="de" onclick="setLang('de')">DE</button>
+    </div>
+    <div class="nav-actions">
+        <button class="cart-btn" onclick="toggleCart()">🛒 <span id="cartCount">0</span></button>
+        <div id="authButtons">
+            <button class="btn-outline" id="navLogin" onclick="showModal('loginModal')">Увійти</button>
+            <button class="btn-primary" id="navRegister" onclick="showModal('registerModal')">Реєстрація</button>
+        </div>
+        <div id="userInfo" style="display:none;align-items:center;gap:0.8rem;">
+            <span id="userName"></span>
+            <button class="btn-outline" id="navLogout" onclick="logout()">Вийти</button>
+        </div>
+    </div>
+</nav>
+
+<section id="heroSection" class="hero">
+    <div class="hero-content">
+        <div class="hero-badge" id="heroBadge">🌿 Офіційний партнер doTERRA</div>
+        <h1><span id="heroTitle1">Природна</span><br><span class="gradient-text" id="heroTitle2">Сила Олій</span></h1>
+        <p id="heroSubtitle">Сертифіковані чисті ефірні олії doTERRA для здоров'я, краси та гармонії вашої родини</p>
+        <button class="btn-primary large" id="heroBtn" onclick="showSection('catalog')">Обрати олії →</button>
+    </div>
+    <div class="hero-visual">
+        <img src="/Images/darina.jpg"
+             alt="Дарина"
+             class="hero-photo">
+        <div class="floating-card">🌸 Lavender 15mL — €29.44</div>
+        <div class="floating-card delay">🍋 Lemon 15mL — €13.50</div>
+        <div class="floating-card delay2">🌿 On Guard® — €36.80</div>
+    </div>
+</section>
+
+<section id="catalogSection" class="section" style="display:none">
+    <div class="container">
+        <div class="section-header">
+            <h2 id="catalogTitle">Каталог олій doTERRA</h2>
+            <div class="search-bar"><input type="text" id="searchInput" placeholder="Пошук олій..." oninput="searchProducts(this.value)"></div>
+        </div>
+        <div class="category-filters" id="categoryFilters"></div>
+        <div class="products-grid" id="productsGrid"><div class="loading">Завантаження...</div></div>
+    </div>
+</section>
+
+<section id="ordersSection" class="section" style="display:none">
+    <div class="container">
+        <h2 id="ordersTitle">Мої замовлення</h2>
+        <div id="ordersList"></div>
+    </div>
+</section>
+
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header"><h3 id="cartTitle">Ваш кошик</h3><button onclick="toggleCart()">✕</button></div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+        <div class="cart-total"><span id="cartTotalLabel">Разом:</span> €<span id="cartTotal">0.00</span></div>
+        <button class="btn-primary full" id="checkoutBtn" onclick="checkout()">Оформити замовлення</button>
+    </div>
+</div>
+
+<div class="chat-widget" id="chatWidget">
+    <div class="chat-header" onclick="toggleChat()">
+        <span id="chatTitle">🌿 AI Консультант doTERRA</span>
+        <span id="chatToggleIcon">▲</span>
+    </div>
+    <div class="chat-body" id="chatBody">
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">👋 Привіт! Я консультант з ефірних олій doTERRA. Запитайте мене про будь-яку олію!</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Запитайте про олії..." onkeydown="if(event.key==='Enter') sendChat()">
+            <button id="chatSendBtn" onclick="sendChat()">→</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="productModal">
+    <div class="modal product-modal">
+        <div class="modal-header"><h3 id="modalProductName">Назва</h3><button onclick="closeModal('productModal')">✕</button></div>
+        <div class="product-modal-body">
+            <div id="modalProductImg" style="width:260px;height:260px;border-radius:12px;overflow:hidden;flex-shrink:0;"></div>
+            <div class="modal-product-info">
+                <div id="modalProductCategory" class="product-category"></div>
+                <p id="modalProductDesc" class="modal-product-desc"></p>
+                <div class="modal-product-footer">
+                    <div><div id="modalProductPrice" class="product-price"></div><div id="modalProductStock" class="product-stock"></div></div>
+                    <button class="btn-primary" id="modalAddToCart" onclick="modalAddToCartClick()">До кошика</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="loginModal">
+    <div class="modal">
+        <div class="modal-header"><h3 id="loginTitle">Вхід</h3><button onclick="closeModal('loginModal')">✕</button></div>
+        <div class="modal-body">
+            <input type="email" id="loginEmail" placeholder="Email" class="input-field">
+            <input type="password" id="loginPassword" placeholder="Пароль" class="input-field">
+            <div id="loginError" class="error-msg"></div>
+            <button class="btn-primary full" id="loginBtn" onclick="login()">Увійти</button>
+            <p class="modal-switch"><span id="loginSwitch">Немає акаунту?</span> <a href="#" id="loginSwitchLink" onclick="switchModal('loginModal','registerModal')">Зареєструватись</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="registerModal">
+    <div class="modal">
+        <div class="modal-header"><h3 id="registerTitle">Створити акаунт</h3><button onclick="closeModal('registerModal')">✕</button></div>
+        <div class="modal-body">
+            <input type="text" id="regName" placeholder="Ваше ім'я" class="input-field">
+            <input type="email" id="regEmail" placeholder="Email" class="input-field">
+            <input type="password" id="regPassword" placeholder="Пароль (мін. 6 символів)" class="input-field">
+            <div id="regError" class="error-msg"></div>
+            <button class="btn-primary full" id="registerBtn" onclick="register()">Зареєструватись</button>
+            <p class="modal-switch"><span id="registerSwitch">Вже є акаунт?</span> <a href="#" id="registerSwitchLink" onclick="switchModal('registerModal','loginModal')">Увійти</a></p>
+        </div>
+    </div>
+</div>
+
+<script src="/js/i18n.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

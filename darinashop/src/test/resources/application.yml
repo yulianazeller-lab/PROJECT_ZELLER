@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/darinashop
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+app:
+  jwt:
+    secret: darina-shop-super-secret-jwt-key-2024
+    expiration: 86400000
+
+telegram:
+  bot-token: test
+  chat-id: test
+
+openai:
+  api:
+    key: test
+    url: https://api.openai.com/v1/chat/completions
+    model: gpt-3.5-turbo
