@@ -22,9 +22,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - run: mvn test --no-transfer-progress
+        working-directory: darinashop
         env:
           DATABASE_URL: jdbc:postgresql://localhost:5432/test
           DATABASE_USERNAME: test
           DATABASE_PASSWORD: test
           JWT_SECRET: test-secret-key-for-ci
       - run: mvn package -DskipTests --no-transfer-progress
+        working-directory: darinashop
